@@ -1,18 +1,23 @@
 package com.chow.feignexample.controller;
 
+import com.chow.feignexample.client.WeatherClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
+@RequestMapping
 public class TestController {
 
-    @RequestMapping("/")
-    public String welcome() {
-        return "Welcome to Spring Boot Tutorials";
-    }
+   @Autowired
+   private WeatherClient weatherClient;
 
-    @RequestMapping("/hello")
-    public String myData() {
-        return "Hello Spring Boot";
-    }
+   @GetMapping("/test")
+   public ResponseEntity<Map> get() {
+      return weatherClient.getWeather();
+   }
 }
